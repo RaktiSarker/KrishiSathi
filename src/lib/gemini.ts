@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 
-const GEMINI_API_KEY = "AIzaSyD0e6oApoBkAnW8912ylkmWYIj2o94eawU";
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
@@ -73,7 +73,13 @@ export async function getRecommendation(
 অনুগ্রহ করে আমার জমির জন্য সঠিক সার ও কীটনাশক সুপারিশ দিন।`;
 
     // Try multiple models in case of rate limits
-    const models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.0-flash-lite"];
+    const models = [
+        "gemini-3.1-flash-lite-preview",
+        "gemini-3-flash-preview",
+        "gemini-2.5-flash",
+        "gemini-2.0-flash",
+        "gemini-flash-latest"
+    ];
 
     for (const model of models) {
         try {
