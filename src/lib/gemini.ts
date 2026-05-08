@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import type { WeatherData, HistoricalWeather } from "./weather";
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 
@@ -62,15 +63,43 @@ export async function getRecommendation(
     cropType: string,
     soilType: string,
     landSize: string,
-    cropDisease: string
+    cropDisease: string,
+    weather?: WeatherData | null,
+    historical?: HistoricalWeather | null
 ): Promise<GeminiRecommendation> {
+    const weatherSection = weather
+        ? `\n\n📍 বর্তমান আবহাওয়া (${weather.city}, ${weather.country}):
+- অবস্থা: ${weather.weatherDescription}
+- তাপমাত্রা: ${weather.temperature}°C (অনুভূতি ${weather.feelsLike}°C)
+- আর্দ্রতা: ${weather.humidity}%
+- বায়ুর গতি: ${weather.windSpeed} km/h
+- বৃষ্টিপাত (আজ): ${weather.precipitation} mm
+- ঋতু: ${weather.season}
+- UV সূচক: ${weather.uvIndex}`
+        : "";
+
+    const historicalSection = historical
+        ? `\n\n📊 বিগত আবহাওয়ার বিশ্লেষণ (${historical.periodLabel}):
+- গড় সর্বোচ্চ তাপমাত্রা: ${historical.avgTempMax}°C
+- গড় সর্বনিম্ন তাপমাত্রা: ${historical.avgTempMin}°C
+- গড় তাপমাত্রা: ${historical.avgTempMean}°C
+- সর্বোচ্চ তাপমাত্রা রেকর্ড: ${historical.maxTempRecorded}°C
+- সর্বনিম্ন তাপমাত্রা রেকর্ড: ${historical.minTempRecorded}°C
+- মোট বৃষ্টিপাত: ${historical.totalPrecipitation} mm
+- দৈনিক গড় বৃষ্টি: ${historical.avgPrecipitationPerDay} mm
+- বৃষ্টির দিন: ${historical.rainyDays} দিন
+- শুষ্ক দিন: ${historical.dryDays} দিন
+- গড় বায়ু গতি: ${historical.avgWindSpeed} km/h
+- আবহাওয়ার প্রবণতা: ${historical.trend}`
+        : "";
+
     const userPrompt = `আমার ফসলের তথ্য:
 - ফসলের ধরন: ${cropType}
 - মাটির ধরন: ${soilType}
 - জমির আকার: ${landSize} বিঘা
-- রোগবালাই: ${cropDisease}
+- রোগবালাই: ${cropDisease}${weatherSection}${historicalSection}
 
-অনুগ্রহ করে আমার জমির জন্য সঠিক সার ও কীটনাশক সুপারিশ দিন।`;
+বর্তমান ও বিগত আবহাওয়ার তথ্য বিবেচনা করে আমার জমির জন্য সঠিক সার ও কীটনাশক সুপারিশ দিন।`;
 
     // Try multiple models in case of rate limits
     const models = [
