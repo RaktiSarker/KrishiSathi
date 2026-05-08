@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Sprout, Eye, EyeOff, LogIn, Loader2, Phone } from "lucide-react";
+import { Sprout, Eye, EyeOff, LogIn, Loader2, Phone, Zap } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+
+const DEMO_PHONE    = import.meta.env.VITE_DEMO_PHONE    || "01700000000";
+const DEMO_PASSWORD = import.meta.env.VITE_DEMO_PASSWORD || "demo1234";
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -62,6 +65,31 @@ const LoginPage = () => {
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">কৃষিসাথীতে স্বাগতম</h1>
             <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">আপনার অ্যাকাউন্টে লগইন করুন</p>
           </div>
+
+          {/* Demo hint */}
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl p-3 mb-5"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 flex items-center gap-1 mb-1">
+                  <Zap className="w-3.5 h-3.5" /> ডেমো অ্যাকাউন্ট (ডেটাবেজ ছাড়াই কাজ করে)
+                </p>
+                <p className="text-xs text-amber-600 dark:text-amber-500">ফোন: <span className="font-mono font-bold">{DEMO_PHONE}</span></p>
+                <p className="text-xs text-amber-600 dark:text-amber-500">পাসওয়ার্ড: <span className="font-mono font-bold">{DEMO_PASSWORD}</span></p>
+              </div>
+              <button
+                type="button"
+                onClick={() => { setPhone(DEMO_PHONE); setPassword(DEMO_PASSWORD); }}
+                className="shrink-0 text-xs bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+              >
+                অটো-ফিল
+              </button>
+            </div>
+          </motion.div>
 
           {/* Error */}
           {error && (
