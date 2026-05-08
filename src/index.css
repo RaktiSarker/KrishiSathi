@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 98%;
+    --foreground: 150 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 150 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 150 25% 15%;
+
+    --primary: 142 55% 35%;
+    --primary-foreground: 40 33% 98%;
+
+    --secondary: 30 35% 93%;
+    --secondary-foreground: 150 25% 15%;
+
+    --muted: 40 20% 94%;
+    --muted-foreground: 150 10% 45%;
+
+    --accent: 45 93% 47%;
+    --accent-foreground: 150 25% 15%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 40 33% 98%;
+
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 142 55% 35%;
+
+    --radius: 0.75rem;
+
+    /* Custom colors */
+    --earth: 25 40% 35%;
+    --earth-light: 30 30% 92%;
+    --leaf: 142 55% 35%;
+    --leaf-light: 142 40% 90%;
+    --harvest: 45 93% 47%;
+    --harvest-light: 45 80% 92%;
+    --sky: 200 80% 55%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(142 55% 35%) 0%, hsl(142 45% 28%) 100%);
+    --gradient-earth: linear-gradient(180deg, hsl(30 30% 92%) 0%, hsl(40 33% 98%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(40 20% 97%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(142 55% 35% / 0.15);
+    --shadow-card: 0 8px 30px -8px hsl(150 25% 15% / 0.1);
+    --shadow-glow: 0 0 40px hsl(142 55% 35% / 0.2);
+  }
+
+  .dark {
+    --background: 150 25% 8%;
+    --foreground: 40 33% 95%;
+
+    --card: 150 20% 12%;
+    --card-foreground: 40 33% 95%;
+
+    --popover: 150 20% 12%;
+    --popover-foreground: 40 33% 95%;
+
+    --primary: 142 50% 45%;
+    --primary-foreground: 150 25% 8%;
+
+    --secondary: 150 15% 18%;
+    --secondary-foreground: 40 33% 95%;
+
+    --muted: 150 15% 18%;
+    --muted-foreground: 40 15% 60%;
+
+    --accent: 45 90% 50%;
+    --accent-foreground: 150 25% 8%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 40 33% 95%;
+
+    --border: 150 15% 20%;
+    --input: 150 15% 20%;
+    --ring: 142 50% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .gradient-earth {
+    background: var(--gradient-earth);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+}
